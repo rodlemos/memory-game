@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     cardsArray.sort(()=> 0.5 - Math.random())
 
-    const grid = document.querySelector('.grid')
+    const board = document.querySelector('.board')
     const resultDisplay = document.querySelector('#result')
     var cardsChosen = []
     var cardsChosenId = []
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             card.setAttribute('src', 'images/blank.png')
             card.setAttribute('data-id', i)
             card.addEventListener('click', flipCard)
-            grid.appendChild(card)
+            board.appendChild(card)
         }
     }
 
@@ -100,8 +100,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
         cardsChosen.push(cardsArray[cardId].name)
         cardsChosenId.push(cardId)
         this.setAttribute('src', cardsArray[cardId].img)
-        if(cardsChosen.length ===2){
+        if(cardsChosen.length === 2){
+            preventSelectTwice();
+        }
+    }
+
+    function preventSelectTwice() {
+        if(cardsChosenId[0] !== cardsChosenId[1]){
             setTimeout(checkForMatch, 500)
+        }else {
+            cardsChosen.pop();
+            cardsChosenId.pop();
+            alert("choose another card!")
         }
     }
 
